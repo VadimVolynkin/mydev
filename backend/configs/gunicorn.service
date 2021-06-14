@@ -1,0 +1,36 @@
+# в каталоге /etc/systemd/system/ создаем 2 файла: gunicorn.service и gunicon.socket 
+
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+# имя и группа процесса
+# User=www
+# Group=www-data
+User=root
+Group=root
+
+# путь до каталога с файлом manage.py
+WorkingDirectory=/usr/src/app/backend
+
+# путь до файла gunicorn в виртуальном окружении
+# количество воркров - ядер процессора * 2 + 1.
+# путь к gunicorn/gunicorn.sock
+# файл myproject.wsgi:application
+# пути к лог файлам
+ExecStart=/usr/src/app/backend/.venv/bin/gunicorn \
+  --workers 5 \
+  # --bind 0.0.0.0:8000
+  --bind unix:/etc/systemd/system/gunicorn.sock \         
+    core.wsgi:application
+  #  \
+  # --access-logfile /gunicorn/access.log \
+  # --error-logfile /gunicorn/error.log
+
+# перезапускать при отказе
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
