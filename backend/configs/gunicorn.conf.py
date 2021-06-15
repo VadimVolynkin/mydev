@@ -2,10 +2,10 @@
 # запуск gunicorn -c gunicorn.conf.py
 
 
-bind = "0.0.0.0:8000"
+# bind = "0.0.0.0:8000"
 # bind = "127.0.0.1:8888"
 # или через сокет
-# bind = "unix:/etc/systemd/system/gunicorn.sock"
+bind = "unix:/etc/systemd/system/gunicorn.sock"
 workers = 5
 user = "root"
 group = "root"

@@ -1,3 +1,4 @@
+# ===== Конфиг для запуска гуникорна в systemd
 # в каталоге /etc/systemd/system/ создаем 2 файла: gunicorn.service и gunicon.socket 
 
 [Unit]
@@ -21,10 +22,10 @@ WorkingDirectory=/usr/src/app/backend
 # файл myproject.wsgi:application
 # пути к лог файлам
 ExecStart=/usr/src/app/backend/.venv/bin/gunicorn \
-  --workers 5 \
-  # --bind 0.0.0.0:8000
-  --bind unix:/etc/systemd/system/gunicorn.sock \         
-    core.wsgi:application
+  --workers 3 \
+  --bind 0.0.0.0:8000
+  # --bind unix:/run/gunicorn.sock \         
+  core.wsgi:application
   #  \
   # --access-logfile /gunicorn/access.log \
   # --error-logfile /gunicorn/error.log

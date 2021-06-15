@@ -4,7 +4,7 @@ Description=gunicorn socket
 
 # Socket определяет расположение сокета
 [Socket]
-ListenStream=/etc/systemd/system/gunicorn.sock
+ListenStream=0.0.0.0:8000
 # ListenStream=/run/gunicorn.sock
 
 # нужно для установки сокета в нужное время
