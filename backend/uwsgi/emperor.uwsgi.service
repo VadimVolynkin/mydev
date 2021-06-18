@@ -1,0 +1,19 @@
+# /etc/systemd/system/emperor.uwsgi.service
+# NOT FOR DOCKER
+
+[Unit]
+Description=uWSGI Emperor
+After=syslog.target
+
+[Service]
+ExecStart=/usr/src/app/backend/.venv/bin/uwsgi --ini /usr/src/app/backend/uwsgi/emperor.ini
+# Requires systemd version 211 or newer
+RuntimeDirectory=uwsgi
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target

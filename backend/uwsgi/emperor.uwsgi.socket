@@ -1,0 +1,14 @@
+# /etc/systemd/system/emperor.uwsgi.socket
+# NOT FOR DOCKER
+# сокет для сервиса emperor.uwsgi.service
+
+[Unit]
+Description=Socket for uWSGI Emperor
+
+[Socket]
+# Change this to your uwsgi application port or unix socket location
+ListenStream=0.0.0.0:8001
+# ListenStream=/tmp/uwsgid.sock
+
+[Install]
+WantedBy=sockets.target

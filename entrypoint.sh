@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# папка с проектом
+# ============================================================================
+# СТАТИКА И МИГРАЦИИ ПРИ СТАРТЕ
+# ============================================================================
 
 # ===== миграции базы
 # python manage.py makemigrations --no-input
@@ -11,14 +13,16 @@
 python manage.py collectstatic --no-input
 
 
-# ===== где будем запускать приложение
+# ============================================================================
+# КАК БУДЕМ ЗАПУСКАТЬ
+# ============================================================================
 
-
-# = локально
+# = локально на джанго runserver
 # python manage.py runserver 0.0.0.0:8000                      
 
-# = в проде через гуникорн
-# exec gunicorn core.wsgi:application -b 0.0.0.0:8000 --reload   
+# = через uwsgi
+# uwsgi --ini /usr/src/app/backend/uwsgi/emperor.ini # the --ini option is used to specify a file
 
-# = в проде через гуникорн конфиг питона
-exec gunicorn --config=/etc/systemd/system/gunicorn.conf.py core.wsgi:application --reload   
+# = через гуникорн
+# exec gunicorn core.wsgi:application --bind unix:/run/gunicorn.sock --reload   
+exec gunicorn --config=/usr/src/app/backend/gunicorn/gunicorn.conf.py core.wsgi:application --reload 

@@ -1,4 +1,4 @@
-FROM python:3.9.5-slim-buster
+FROM python:3.9.5-buster
 
 # переменные окружения для python
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -10,16 +10,7 @@ WORKDIR /usr/src/app
 
 ADD . .
 RUN chmod +x entrypoint.sh
-# копируем это в WORKDIR
-# ADD requirements.txt .
-# ADD Pipfile .
-# ADD Pipfile.lock .
 
-# ADD entrypoint.sh .
-
-ADD backend/configs/ /etc/systemd/system
-
-# RUN pip install -r requirements.txt
 WORKDIR /usr/src/app/backend
 RUN set -ex && pipenv install --deploy --system
 

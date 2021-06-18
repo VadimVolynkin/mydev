@@ -4,8 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-gunicorn = "==20.1.0"
 Django = "==3.2.4"
+uwsgi = "*"
+gunicorn = "*"
 
 [dev-packages]
 

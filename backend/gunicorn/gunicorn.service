@@ -17,18 +17,25 @@ Group=root
 WorkingDirectory=/usr/src/app/backend
 
 # путь до файла gunicorn в виртуальном окружении
-# количество воркров - ядер процессора * 2 + 1.
-# путь к gunicorn/gunicorn.sock
-# файл myproject.wsgi:application
+# количество воркров, обычно = ядер процессора * 2 + 1
+# путь к gunicorn/gunicorn.sock или ip_adress:port
 # пути к лог файлам
+# файл my_project.wsgi:application
 ExecStart=/usr/src/app/backend/.venv/bin/gunicorn \
   --workers 3 \
-  --bind 0.0.0.0:8000
-  # --bind unix:/run/gunicorn.sock \         
+  --bind 127.0.0.1:8000 \
+  # --bind unix:/run/gunicorn.sock \       
+  --access-logfile /gunicorn/access.log \
+  --error-logfile /gunicorn/error.log
   core.wsgi:application
-  #  \
-  # --access-logfile /gunicorn/access.log \
-  # --error-logfile /gunicorn/error.log
+
+
+RuntimeDirectory=gunicorn
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
 
 # перезапускать при отказе
 Restart=on-failure
